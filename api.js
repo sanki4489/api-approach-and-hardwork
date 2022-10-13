@@ -111,3 +111,53 @@ fetch(api, {
 //   },
 // })
 
+
+
+// Solution 4
+import {
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  ref,
+} from '@nuxtjs/composition-api'
+import { getService } from '@/utils/frameCamera'
+
+export default defineComponent({
+  setup() {
+    const timeOutCSS = ref()
+    onMounted(async () => {
+      const iframeVideo: any = document.getElementById(`iframesrc`)
+      const content = iframeVideo?.contentWindow?.document || null
+      const { data } = await getService(
+        `https://api-dev.conecame.com/v1/view/18`
+      )
+      content.open()
+      content.write(data)
+      content.close()
+      const style = document.createElement('style')
+      style.textContent = `body {
+            background-color: transparent;
+          }
+          .image-wrap img {
+            width: 100%
+          }
+          .footer .show-digest {
+          width: 73px
+          }
+          .header {
+            height: 0  
+          }`
+      timeOutCSS.value = setTimeout(() => {
+        iframeVideo.contentDocument.head.appendChild(style)
+      }, 100)
+    })
+    onUnmounted(() => {
+      clearTimeout(timeOutCSS.value)
+    })
+    return {
+      timeOutCSS,
+    }
+  },
+})
+
+
