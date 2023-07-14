@@ -14,26 +14,6 @@ fetch(api, {
     content.write(data)
     content.close()
   })
-//   .catch(error => console.log('Error'))
-
-
-// import { defineComponent } from '@nuxtjs/composition-api'
-// import { getContent } from '@/utils/frameCamera'
-// import axios from 'axios'
-
-// Solution 1
-// export default {
-//   async asyncData() {
-//     const iframesrc = document.getElementById('iframesrc')
-//     const { content } = await getContent(
-//       `https://api-dev.conecame.com/v1/view/18`
-//     )
-//     iframesrc?.contentWindow.document.open()
-//     iframesrc?.contentWindow.document.write(content)
-//     iframesrc?.contentWindow.document.close()
-//   },
-// }
-// Solution 2
 
 // Solution 3
 
